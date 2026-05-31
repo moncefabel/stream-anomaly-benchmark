@@ -143,8 +143,11 @@ python src/plot_results.py
 - [x] ECONOMY-K evaluation pipeline
 - [x] Unified metric suite (earliness, HM score, stability)
 - [x] Results on 5 UCR datasets + 4 figures
-- [ ] Threshold sensitivity analysis (ECONOMY-K)
-- [ ] Analysis notebook
+- [x] Threshold sensitivity analysis (ECONOMY-K)
+- [x] Heterogeneous orchestration prototype (3 schemes)
+- [x] Two-threshold orchestration experiment
+- [x] Research notes (experimental log + negative results)
+- [ ] Analysis notebook (execution pending)
 - [ ] Extended benchmark (10+ datasets)
 - [ ] Technical report (PDF)
 

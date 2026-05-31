@@ -144,3 +144,27 @@ agents on HM score.
 is insufficient for non-trivial orchestration. Genuine diversity of
 agent type — different algorithms, different reasoning paradigms — is
 required. This directly motivates the thesis research agenda.
+
+---
+
+### Experiment 3 — Two-Threshold Orchestrator (Results)
+
+Agents: EK-Aggressive (τ=0.40) + EK-Conservative (τ=0.70)
+
+| Method | Mean Accuracy | Mean Earliness | Mean HM |
+|---|---|---|---|
+| EK-Aggressive | 0.807 | 0.952 | 0.863 |
+| Orch2-OR | 0.807 | 0.952 | 0.863 |
+| Orch2-WEIGHTED | 0.807 | 0.952 | 0.863 |
+| EK-Conservative | 0.884 | 0.228 | 0.332 |
+| Orch2-AND | 0.884 | ~0.150 | 0.325 |
+
+**Finding:** OR and WEIGHTED collapse to EK-Aggressive (first-to-trigger
+always wins). AND collapses to EK-Conservative with *lower* earliness
+(disagreements fall back to T). No scheme beats individual agents on HM.
+
+**Conclusion:** Homogeneous agents (same algorithm, different thresholds)
+produce no HM gain through orchestration. Genuine algorithmic diversity
+is required — different learning paradigms, not just different parameters.
+This directly motivates the thesis research agenda on heterogeneous
+multi-agent cooperation.
