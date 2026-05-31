@@ -132,3 +132,15 @@ the two — tunable operating point on the Pareto frontier.
 - [ ] Extend benchmark to 10+ datasets for robustness
 - [ ] Formalise the cooperation scheme as a decision-theoretic framework
 - [ ] Connect to NORIA-O ontology as semantic coordination layer
+---
+
+### Experiment 3 — Two-Threshold Orchestrator (Results)
+
+**Finding:** OR/WEIGHTED collapse to EK-Aggressive. AND collapses to
+EK-Conservative but with lower earliness. No scheme beats individual
+agents on HM score.
+
+**Conclusion:** Agent homogeneity (same algorithm, different thresholds)
+is insufficient for non-trivial orchestration. Genuine diversity of
+agent type — different algorithms, different reasoning paradigms — is
+required. This directly motivates the thesis research agenda.
