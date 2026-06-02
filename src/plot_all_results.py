@@ -1,8 +1,6 @@
 """
 plot_all_results.py
--------------------
-Figure 7: Comprehensive comparison of all methods across all experiments.
-One figure to rule them all — shows the full Pareto landscape explored.
+Figure 7: comprehensive comparison of all methods across all experiments.
 """
 
 from __future__ import annotations
@@ -88,7 +86,7 @@ def plot_comprehensive(df: pd.DataFrame) -> None:
         fontsize=14, fontweight="bold"
     )
 
-    # ── Panel A: Pareto scatter ───────────────────────────────────────────────
+    # Panel A: Pareto scatter
     ax = axes[0, 0]
     for method in methods:
         grp = df[df["method"] == method]
@@ -106,7 +104,7 @@ def plot_comprehensive(df: pd.DataFrame) -> None:
     ax.legend(fontsize=7, ncol=2, loc="lower right")
     ax.grid(alpha=0.3)
 
-    # ── Panel B: Mean HM Score bar chart ─────────────────────────────────────
+    # Panel B: Mean HM Score bar chart
     ax = axes[0, 1]
     mean_hm = df.groupby("method")["hm_score"].mean().sort_values(ascending=True)
     colors_bar = [COLORS.get(m, DEFAULT_COLOR) for m in mean_hm.index]
@@ -117,7 +115,7 @@ def plot_comprehensive(df: pd.DataFrame) -> None:
     ax.set_xlim(0, 1.15)
     ax.grid(axis="x", alpha=0.3)
 
-    # ── Panel C: Per-dataset HM heatmap ──────────────────────────────────────
+    # Panel C: Per-dataset HM heatmap
     ax = axes[1, 0]
     pivot = df.pivot_table(
         index="dataset", columns="method", values="hm_score", aggfunc="mean"
@@ -139,7 +137,7 @@ def plot_comprehensive(df: pd.DataFrame) -> None:
     ax.set_xticklabels(ax.get_xticklabels(), rotation=30, ha="right", fontsize=8)
     ax.set_yticklabels(ax.get_yticklabels(), rotation=0, fontsize=8)
 
-    # ── Panel D: Trilemma radar (mean across datasets) ────────────────────────
+    # Panel D: Trilemma radar
     ax = axes[1, 1]
     ax.set_aspect("equal")
 

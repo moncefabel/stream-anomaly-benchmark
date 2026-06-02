@@ -1,30 +1,11 @@
 """
 orchestrator2_twothreshold.py
------------------------------
-Two-threshold ECONOMY-K orchestration experiment.
+Two-threshold ECONOMY-K orchestration: agent A (τ=0.40) vs agent B (τ=0.70).
 
-Replaces TEASER (which systematically abstains on small datasets)
-with two ECONOMY-K agents operating at different confidence thresholds,
-modeling agents with explicitly different risk tolerances.
-
-Agent A (Aggressive)  : threshold = 0.40 -> triggers early, accepts lower confidence
-Agent B (Conservative): threshold = 0.70 -> waits for high confidence, more accurate
-
-Three cooperation schemes:
-  OR       : trigger when either agent decides    -> max earliness
-  AND      : trigger when both agree on the label -> max reliability
-  WEIGHTED : take first-to-trigger agent          -> follows aggressive agent
-
-Key finding: With homogeneous agent types (same algorithm, different
-thresholds), no cooperation scheme outperforms individual agents on HM
-score. OR collapses to EK-Aggressive. AND collapses to EK-Conservative
-with lower earliness. WEIGHTED degenerates to OR.
-
-This finding motivates the thesis research question: genuine agent
-diversity (different algorithms, different reasoning paradigms) is
-required for non-trivial orchestration gains.
-
-See RESEARCH_NOTES.md — Experiment 3 for full analysis.
+TEASER was replaced here because it systematically abstains on small datasets
+(see RESEARCH_NOTES.md, Experiment 2). The key finding is that homogeneous
+agents (same algorithm, different thresholds) produce no HM gain through
+any cooperation scheme — genuine algorithmic diversity is needed.
 """
 
 from __future__ import annotations
@@ -40,7 +21,7 @@ from datasets import load_dataset, UCR_DATASETS
 from evaluate import EconomyK
 from metrics import evaluate
 
-# ── Configuration ─────────────────────────────────────────────────────────────
+# Configuration
 
 THRESHOLD_A = 0.40   # aggressive agent
 THRESHOLD_B = 0.70   # conservative agent
@@ -48,7 +29,7 @@ DATASETS    = ["ItalyPowerDemand", "ECG200", "SonyAIBORobotSurface1",
                "ECG5000", "Wafer"]
 
 
-# ── Cooperation schemes ───────────────────────────────────────────────────────
+# Cooperation schemes
 
 def orchestrate(
     pA: np.ndarray, tA: np.ndarray,
@@ -110,7 +91,7 @@ def orchestrate(
     return preds, triggers
 
 
-# ── Main benchmark ────────────────────────────────────────────────────────────
+# Main benchmark
 
 def run() -> pd.DataFrame:
     rows = []

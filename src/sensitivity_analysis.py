@@ -1,17 +1,7 @@
 """
 sensitivity_analysis.py
------------------------
-Threshold sensitivity analysis for ECONOMY-K.
-
-Research question: How does the confidence threshold affect the
-earliness-reliability-stability trilemma?
-
-A low threshold → trigger early → high earliness, lower accuracy
-A high threshold → wait for confidence → high accuracy, lower earliness
-
-This analysis maps the Pareto frontier of the trilemma as a function
-of the stopping threshold — directly relevant to the thesis problem of
-designing adaptive orchestration strategies under time constraints.
+ECONOMY-K threshold sweep (τ ∈ [0.10, 0.95]): how does the stopping
+threshold move the earliness-accuracy trade-off?
 """
 
 from __future__ import annotations
@@ -32,7 +22,7 @@ sns.set_theme(style="whitegrid", font_scale=1.1)
 FIGURES = Path("../results/figures")
 FIGURES.mkdir(parents=True, exist_ok=True)
 
-# ── Configuration ─────────────────────────────────────────────────────────────
+# Configuration
 
 THRESHOLDS = np.round(np.arange(0.10, 0.96, 0.05), 2)
 
@@ -47,13 +37,10 @@ DATASETS = [
 PALETTE = sns.color_palette("tab10", n_colors=len(DATASETS))
 
 
-# ── Run sweep ─────────────────────────────────────────────────────────────────
+# Run sweep
 
 def run_threshold_sweep() -> pd.DataFrame:
-    """
-    For each (dataset, threshold) pair, fit ECONOMY-K and record
-    accuracy, earliness, and HM score.
-    """
+    """Fit ECONOMY-K at each (dataset, threshold) and record accuracy/earliness/HM."""
     rows = []
 
     for name in DATASETS:
@@ -82,13 +69,10 @@ def run_threshold_sweep() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-# ── Figure 5 : Threshold vs HM Score (per dataset) ───────────────────────────
+# Figure 5: Threshold vs HM Score
 
 def plot_threshold_vs_hm(df: pd.DataFrame) -> None:
-    """
-    Line plot: how HM score evolves as threshold increases, per dataset.
-    Shows the optimal threshold per dataset and whether it generalises.
-    """
+    """HM score vs threshold per dataset; filled markers indicate the optimum."""
     fig, ax = plt.subplots(figsize=(9, 5))
 
     for i, (name, grp) in enumerate(df.groupby("dataset")):
@@ -123,16 +107,10 @@ def plot_threshold_vs_hm(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
-# ── Figure 6 : Pareto frontier (accuracy vs earliness) per threshold ──────────
+# Figure 6: Pareto frontier (accuracy vs earliness)
 
 def plot_pareto_threshold(df: pd.DataFrame) -> None:
-    """
-    For each threshold value, plot mean accuracy vs mean earliness
-    across all datasets. Traces the Pareto frontier as threshold varies.
-
-    High threshold → top-left (high accuracy, low earliness)
-    Low threshold  → bottom-right (low accuracy, high earliness)
-    """
+    """Mean accuracy vs mean earliness as threshold varies — traces the Pareto frontier."""
     mean_df = df.groupby("threshold")[["accuracy", "earliness", "hm_score"]].mean().reset_index()
 
     fig, ax = plt.subplots(figsize=(7, 6))
@@ -183,7 +161,7 @@ def plot_pareto_threshold(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
-# ── Summary ───────────────────────────────────────────────────────────────────
+# Summary
 
 def print_optimal_thresholds(df: pd.DataFrame) -> None:
     print("\n=== OPTIMAL THRESHOLD PER DATASET (max HM Score) ===\n")
@@ -217,7 +195,7 @@ def print_optimal_thresholds(df: pd.DataFrame) -> None:
     )
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main
 
 if __name__ == "__main__":
     print("=" * 55)

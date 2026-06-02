@@ -1,8 +1,6 @@
 """
 plot_results.py
----------------
-Visualizations for the earliness-reliability-stability trilemma benchmark.
-Generates 4 publication-ready figures saved to results/figures/.
+Generates the 4 main benchmark figures, saved to results/figures/.
 """
 
 from __future__ import annotations
@@ -14,7 +12,7 @@ import matplotlib.patches as mpatches
 import seaborn as sns
 from pathlib import Path
 
-# ── Style ─────────────────────────────────────────────────────────────────────
+# Style
 sns.set_theme(style="whitegrid", font_scale=1.1)
 COLORS = {"TEASER": "#2563EB", "ECONOMY-K": "#DC2626"}
 MARKERS = {"TEASER": "o", "ECONOMY-K": "s"}
@@ -30,14 +28,10 @@ def load(path: str = "../results/benchmark_results_full.csv") -> pd.DataFrame:
     return df
 
 
-# ── Figure 1 : Accuracy vs Earliness (Pareto scatter) ────────────────────────
+# Figure 1: Accuracy vs Earliness (Pareto scatter)
 
 def plot_pareto(df: pd.DataFrame) -> None:
-    """
-    Scatter plot of accuracy vs earliness per dataset and method.
-    Each point = one (dataset, method) pair.
-    Shows the trade-off frontier between the two objectives.
-    """
+    """Accuracy vs earliness scatter; each point is one (dataset, method) pair."""
     fig, ax = plt.subplots(figsize=(8, 6))
 
     for method, grp in df.groupby("method"):
@@ -73,13 +67,10 @@ def plot_pareto(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
-# ── Figure 2 : HM Score bar chart ────────────────────────────────────────────
+# Figure 2: HM Score bar chart
 
 def plot_hm_bars(df: pd.DataFrame) -> None:
-    """
-    Grouped bar chart of HM score per dataset, coloured by method.
-    Directly shows which method wins on each dataset.
-    """
+    """Grouped bar chart of HM score per dataset, coloured by method."""
     datasets = df["dataset"].unique()
     x = np.arange(len(datasets))
     width = 0.35
@@ -118,13 +109,10 @@ def plot_hm_bars(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
-# ── Figure 3 : Radar / Spider chart ──────────────────────────────────────────
+# Figure 3: Radar chart
 
 def plot_radar(df: pd.DataFrame) -> None:
-    """
-    Radar chart averaging accuracy, earliness, HM score across all datasets.
-    Gives a global profile of each method.
-    """
+    """Radar chart of mean accuracy/earliness/HM score across all datasets."""
     metrics   = ["accuracy", "earliness", "hm_score"]
     labels    = ["Accuracy", "Earliness", "HM Score"]
     n_metrics = len(metrics)
@@ -153,13 +141,10 @@ def plot_radar(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
-# ── Figure 4 : Method wins heatmap ───────────────────────────────────────────
+# Figure 4: Method wins heatmap
 
 def plot_wins_heatmap(df: pd.DataFrame) -> None:
-    """
-    Heatmap: for each (dataset, metric), which method wins?
-    Green = TEASER wins, Red = ECONOMY-K wins.
-    """
+    """Heatmap of which method wins per (dataset, metric)."""
     metrics  = ["accuracy", "earliness", "hm_score"]
     datasets = df["dataset"].unique()
 
@@ -199,7 +184,7 @@ def plot_wins_heatmap(df: pd.DataFrame) -> None:
     plt.close(fig)
 
 
-# ── Summary table ─────────────────────────────────────────────────────────────
+# Summary table
 
 def print_summary(df: pd.DataFrame) -> None:
     print("\n=== MEAN METRICS BY METHOD ===\n")
@@ -226,7 +211,7 @@ def print_summary(df: pd.DataFrame) -> None:
     print(f"  Ties          : {ties}")
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main
 
 if __name__ == "__main__":
     print("Loading results...")

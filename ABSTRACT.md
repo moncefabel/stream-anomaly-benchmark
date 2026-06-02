@@ -5,8 +5,6 @@
 **Author:** Moncef Bouhabel
 **Context:** Preparatory research — CIFRE PhD candidacy, Orange Innovation / EURECOM (ref. 2026-51517)
 
----
-
 ### Summary
 
 Early classification of time series requires committing to a decision
@@ -55,21 +53,15 @@ heterogeneous multi-agent systems that dynamically negotiate their
 cooperation scheme based on stream statistics, agent confidence signals,
 and semantic contracts encoded in operational knowledge graphs.
 
----
-
 ### Keywords
 
 Early time series classification · Anomaly detection · Multi-agent
 systems · Trilemma · Pareto frontier · Confidence calibration ·
 NetOps · ECONOMY-K · TEASER · UCR benchmark
 
----
-
 ### Repository
 
 [github.com/moncefabel/stream-anomaly-benchmark](https://github.com/moncefabel/stream-anomaly-benchmark)
-
----
 
 ### References
 

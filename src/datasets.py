@@ -1,9 +1,7 @@
 
 """
 datasets.py
------------
-UCR Time Series Archive loader for stream-anomaly-benchmark.
-Uses aeon for dataset fetching and preprocessing.
+UCR dataset loader using aeon. Returns 2D numpy arrays (n_samples, T).
 """
 
 from __future__ import annotations
@@ -33,15 +31,7 @@ UCR_DATASETS = {
 
 
 def load_dataset(name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Load a UCR dataset by name.
-
-    Returns
-    -------
-    X_train, y_train, X_test, y_test : np.ndarray
-        X shape : (n_samples, n_timepoints)  — 2D, one series per row
-        y shape : (n_samples,)               — integer class labels
-    """
+    """Load a UCR dataset by name. Returns X_train, y_train, X_test, y_test as 2D arrays."""
     if name not in UCR_DATASETS:
         raise ValueError(
             f"Dataset '{name}' not in benchmark suite.\n"

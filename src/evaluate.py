@@ -1,9 +1,6 @@
 """
 evaluate.py
------------
-Unified evaluation pipeline for early time series classification.
-Runs TEASER and ECONOMY-K on UCR datasets and computes
-the earliness-reliability-stability trilemma metrics.
+Unified evaluation pipeline for TEASER and ECONOMY-K on UCR datasets.
 """
 
 from __future__ import annotations
@@ -20,7 +17,7 @@ from datasets import load_dataset, UCR_DATASETS
 from metrics import evaluate, stability
 
 
-# ── Format helper ─────────────────────────────────────────────────────────────
+# Format helper
 
 def to_3d(X: np.ndarray) -> np.ndarray:
     """
@@ -30,7 +27,7 @@ def to_3d(X: np.ndarray) -> np.ndarray:
     return X[:, np.newaxis, :].astype(np.float64)
 
 
-# ── TEASER ────────────────────────────────────────────────────────────────────
+# TEASER
 
 def run_teaser(
     X_train: np.ndarray,
@@ -78,16 +75,12 @@ def run_teaser(
     )
 
 
-# ── ECONOMY-K (lightweight) ───────────────────────────────────────────────────
+# ECONOMY-K
 
 class EconomyK:
     """
-    Simplified ECONOMY-K early classifier.
-
-    Stopping rule: trigger when confidence of 1-NN prediction
-    exceeds threshold. Confidence = 1 - d1/(d1+d2).
-
-    Reference: Achenchabe et al. (2021), Machine Learning 110:1481-1517.
+    Lightweight ECONOMY-K: trigger when 1-NN confidence exceeds threshold.
+    Confidence = 1 - d1/(d1+d2). Ref: Achenchabe et al. (2021).
     """
 
     def __init__(self, threshold: float = 0.55, min_length: int = 3):
@@ -161,7 +154,7 @@ def run_economy_k(
     )
 
 
-# ── Full benchmark ────────────────────────────────────────────────────────────
+# Full benchmark
 
 def benchmark(
     datasets: list[str] | None = None,

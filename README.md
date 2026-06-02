@@ -6,8 +6,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status: Active](https://img.shields.io/badge/status-active-brightgreen.svg)]()
 
----
-
 ## Motivation
 
 Early classification of time series asks a deceptively simple question:
@@ -24,8 +22,6 @@ Existing methods optimize for **earliness** or **accuracy** in isolation. This b
 | **Stability** | How consistent are decisions across random seeds and stream perturbations? |
 
 No published benchmark jointly evaluates all three dimensions across methods and datasets. This repository fills that gap.
-
----
 
 ## Preliminary Results
 
@@ -50,8 +46,6 @@ Full results: [`results/benchmark_results_full.csv`](results/benchmark_results_f
 |---|---|
 | ![Radar](results/figures/fig3_radar_profile.png) | ![Heatmap](results/figures/fig4_wins_heatmap.png) |
 
----
-
 ## Methods
 
 | Method | Reference | Key idea |
@@ -60,8 +54,6 @@ Full results: [`results/benchmark_results_full.csv`](results/benchmark_results_f
 | **ECONOMY-K** | Achenchabe et al., 2021 | Cost-sensitive stopping — triggers when expected future gain < current cost |
 
 Both methods are benchmarked via a unified evaluation harness with reproducible seeds, consistent train/test splits, and a shared metric suite.
-
----
 
 ## Datasets
 
@@ -75,8 +67,6 @@ All datasets from the [UCR Time Series Archive](https://www.cs.ucr.edu/~eamonn/t
 | ECG5000 | ECG | 500 | 4500 | 140 | 5 |
 | Wafer | Industrial | 1000 | 6164 | 152 | 2 |
 
----
-
 ## Metrics
 
 ```
@@ -84,8 +74,6 @@ Earliness(t)  = 1 - (t / T)                          # fraction of series unseen
 HM_score      = 2 · (Accuracy · Earliness) / (Accuracy + Earliness)
 Stability(σ)  = mean std of trigger_time across seeds  # lower = more stable
 ```
-
----
 
 ## Repository Structure
 
@@ -113,8 +101,6 @@ stream-anomaly-benchmark/
 └── README.md
 ```
 
----
-
 ## Quickstart
 
 ```bash
@@ -132,8 +118,6 @@ python src/evaluate.py
 # Generate figures
 python src/plot_results.py
 ```
-
----
 
 ## Roadmap
 
@@ -165,8 +149,6 @@ The earliness–reliability–stability trilemma maps directly onto the operatio
 
 Understanding the Pareto frontier between these three objectives is a prerequisite for designing reliable **multi-model orchestration systems** for NetOps/SecOps — where heterogeneous agents must collectively decide when and how to escalate an anomaly signal.
 
----
-
 ## References
 
 - Schäfer, P., & Leser, U. (2020). [TEASER: Early and Accurate Time Series Classification](https://doi.org/10.1007/s10618-020-00707-1). *Data Mining and Knowledge Discovery*, 34, 1598–1626.
@@ -174,15 +156,10 @@ Understanding the Pareto frontier between these three objectives is a prerequisi
 - Mori, U., Mendiburu, A., Keogh, E., & Lozano, J. A. (2017). Reliable early classification of time series based on discriminating the classes over time. *Data Mining and Knowledge Discovery*, 31(1), 233–263.
 - Dau, H. A., et al. (2018). [The UCR Time Series Archive](https://arxiv.org/abs/1810.07758). *IEEE/CAA Journal of Automatica Sinica*.
 
----
-
 ## Author
 
 **Moncef Bouhabel** — ML Engineer, Master ML for Data Science, Université Paris Cité
 [github.com/moncefabel](https://github.com/moncefabel)
-
-
----
 
 ## Sensitivity Analysis
 
@@ -193,8 +170,6 @@ ECONOMY-K threshold sweep (τ ∈ [0.10, 0.95]) across all datasets:
 | ![Threshold vs HM Score](results/figures/fig5_threshold_hm_score.png) | ![Pareto Frontier](results/figures/fig6_pareto_threshold_frontier.png) |
 
 **Key finding:** HM score plateaus for τ < 0.55 across all datasets — the 1-NN confidence metric saturates at low thresholds. The effective decision zone is τ ∈ [0.55, 0.70], motivating research on richer confidence estimators for adaptive stopping rules.
-
----
 
 ## Heterogeneous Orchestration
 

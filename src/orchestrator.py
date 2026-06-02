@@ -1,15 +1,6 @@
 """
 orchestrator.py
----------------
-HeterogeneousOrchestrator: multi-agent cooperation prototype
-for early time series classification.
-
-Three cooperation schemes:
-  OR       : trigger when EITHER agent decides     → aggressive, early
-  AND      : trigger only when BOTH agree          → conservative, reliable
-  WEIGHTED : weighted vote by training accuracy    → adaptive compromise
-
-Thesis connection: Orange Innovation / EURECOM (ref. 2026-51517)
+Multi-agent cooperation prototype: TEASER + ECONOMY-K with OR/AND/WEIGHTED schemes.
 """
 
 from __future__ import annotations
@@ -27,7 +18,7 @@ from datasets import load_dataset, UCR_DATASETS
 from metrics import evaluate
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# Helpers
 
 def _to_int_labels(arr: np.ndarray) -> np.ndarray:
     """
@@ -44,20 +35,13 @@ def _to_int_labels(arr: np.ndarray) -> np.ndarray:
     return result
 
 
-# ── Orchestrator ──────────────────────────────────────────────────────────────
+# Orchestrator
 
 class HeterogeneousOrchestrator:
     """
-    Multi-agent early classifier: TEASER + ECONOMY-K.
-
-    At each timestep t, both agents independently decide.
-    The orchestrator applies a cooperation scheme.
-
-    Schemes
-    -------
-    OR       : either agent triggers  → max earliness
-    AND      : both must agree        → max reliability
-    WEIGHTED : weighted vote          → adaptive balance
+    TEASER + ECONOMY-K combined under OR / AND / WEIGHTED cooperation.
+    At each timestep t, both agents independently decide; the scheme
+    determines when a final prediction is committed.
     """
 
     SCHEMES = ("OR", "AND", "WEIGHTED")
@@ -170,7 +154,7 @@ class HeterogeneousOrchestrator:
         return predictions, trigger_times
 
 
-# ── Run helpers ───────────────────────────────────────────────────────────────
+# Run helpers
 
 def run_orchestrator(
     X_train: np.ndarray,
@@ -238,7 +222,7 @@ def benchmark_orchestrator(
     return pd.DataFrame(rows)
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main
 
 if __name__ == "__main__":
     DATASETS = ["ItalyPowerDemand", "ECG200", "SonyAIBORobotSurface1",
